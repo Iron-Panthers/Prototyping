@@ -83,8 +83,8 @@ public class ColorMatcher extends SubsystemBase {
             colorAsString = "Unknown";
         }
 
-        final var rgbArray = new double[] { detectedColor.red, detectedColor.blue, detectedColor.green };
-        SmartDashboard.putNumberArray("ColorMatcher/RGB", rgbArray);
+        SmartDashboard.putString("ColorMatcher/RGB",
+                detectedColor.red + " " + detectedColor.green + " " + detectedColor.blue);
         SmartDashboard.putString("ColorMatcher/DetectedColor", colorAsString);
         SmartDashboard.putNumber("ColorMatcher/Confidence", matchResult.confidence);
     }
