@@ -22,14 +22,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+	private final SRXSubsystem srx = new SRXSubsystem();
 
-	private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+	private final Joystick stick1 = new Joystick(0);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
+		srx.setDefaultCommand(new RunSRX(srx, stick1::getSlider, new JoystickButton(stick1, 1))); //getSlider probably not right i'll figure it out once i get wiplib set up
+
+
 		// Configure the button bindings
 		configureButtonBindings();
 	}
@@ -41,6 +44,8 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+
+
 	}
 
 	/**
