@@ -7,17 +7,21 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.SRXSubsystem;
 
 public class RunSRX extends CommandBase {
 	private final SRXSubsystem motor;
 	private final DoubleSupplier power;
-	private final Trigger run;
+	private final JoystickButton run;
 
   /**
    * Creates a new RunSRX.
    */
-  public RunSRX(SRXSubsystem motor, DoubleSupplier power, Trigger run) {
+  public RunSRX(SRXSubsystem motor, DoubleSupplier power, JoystickButton run) {
 	addRequirements(motor);
 	this.motor = motor;
 	this.power = power;

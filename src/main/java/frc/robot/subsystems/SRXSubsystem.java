@@ -7,15 +7,20 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
 
 public class SRXSubsystem extends SubsystemBase {
+  private final TalonSRX srx;
 
   /**
    * Creates a new SRXSubsystem.
    */
   public SRXSubsystem() {
-	  private final TalonSRX srx = new TalonSRX(Ports.kCANSRX1);
+	  srx = new TalonSRX(Ports.kCANSRX1);
 
   }
 
