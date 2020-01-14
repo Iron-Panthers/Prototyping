@@ -12,23 +12,24 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.SRXSubsystem;
+import frc.robot.subsystems.SparkSubsystem;
 
-public class RunSRX extends CommandBase {
-	private final SRXSubsystem motor;
-	private final DoubleSupplier power;
-  private final JoystickButton run;
+public class RunSpark extends CommandBase {
+
+  SparkSubsystem motor;
+  DoubleSupplier power;
+  JoystickButton run;
 
   /**
-   * Creates a new RunSRX.
+   * Creates a new RunSpark.
    */
-  public RunSRX(SRXSubsystem motor, DoubleSupplier power, JoystickButton run) {
-	addRequirements(motor);
-	this.motor = motor;
-	this.power = power;
-  this.run = run;
-    
-  // Use addRequirements() here to declare subsystem dependencies.
+  public RunSpark(SparkSubsystem motor, DoubleSupplier power, JoystickButton run) {
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(motor);
+    this.motor = motor;
+    this.power = power;
+    this.run = run;
   }
 
   // Called when the command is initially scheduled.
@@ -39,12 +40,12 @@ public class RunSRX extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-	  if(run.get()) {
-      double pow = power.getAsDouble();
+    if(run.get()) {
+		  double pow = power.getAsDouble();
       motor.set(pow);
-      SmartDashboard.putNumber("srx power", pow);
-      SmartDashboard.putNumber("srx out voltage", motor.getMotor().getBusVoltage());
-      SmartDashboard.putNumber("srx out current", motor.getMotor().getStatorCurrent());
+      SmartDashboard.putNumber("spark set power", pow);
+      SmartDashboard.putNumber("spark out voltage", motor.getMotor().getBusVoltage());
+      SmartDashboard.putNumber("spark out current", motor.getMotor().getOutputCurrent());
 
 	  }
 	  else {
@@ -55,7 +56,6 @@ public class RunSRX extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-	motor.set(0.0);
   }
 
   // Returns true when the command should end.

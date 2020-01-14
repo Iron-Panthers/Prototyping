@@ -23,4 +23,7 @@ public final class Ports {
 
     public static final int kCANSRX1 = 1;
 
+    public static final int kCANSPARK1 = 1;
+    
+    public static final int kCANFALCON1 = 1;
 }

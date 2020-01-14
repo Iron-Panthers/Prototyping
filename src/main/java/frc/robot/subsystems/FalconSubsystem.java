@@ -7,25 +7,27 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 
-public class SRXSubsystem extends SubsystemBase {
-  private final TalonSRX srx;
+public class FalconSubsystem extends SubsystemBase {
+
+  private final TalonFX falcon;
 
   /**
-   * Creates a new SRXSubsystem.
+   * Creates a new FalconSubsystem.
    */
-  public SRXSubsystem() {
-	  srx = new TalonSRX(Ports.kCANSRX1);
+  public FalconSubsystem() {
+    falcon = new TalonFX(Ports.kCANFALCON1);
+    falcon.configFactoryDefault();
 
   }
 
   public void set(double power) {
-	  srx.set(ControlMode.PercentOutput, power);
+    falcon.set(TalonFXControlMode.PercentOutput, power);
   }
 
   @Override
@@ -33,7 +35,7 @@ public class SRXSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public TalonSRX getMotor() {
-    return srx;
+  public TalonFX getMotor() {
+    return falcon;
   }
 }

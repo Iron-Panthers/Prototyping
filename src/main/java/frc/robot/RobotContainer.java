@@ -12,8 +12,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.RunFalcon;
 import frc.robot.commands.RunSRX;
+import frc.robot.commands.RunSpark;
+import frc.robot.subsystems.FalconSubsystem;
 import frc.robot.subsystems.SRXSubsystem;
+import frc.robot.subsystems.SparkSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -25,6 +29,8 @@ import frc.robot.subsystems.SRXSubsystem;
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final SRXSubsystem srx = new SRXSubsystem();
+	private final SparkSubsystem spark = new SparkSubsystem();
+	private final FalconSubsystem falcon = new FalconSubsystem();
 
 	private final Joystick stick1 = new Joystick(0);
 
@@ -32,8 +38,9 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-		srx.setDefaultCommand(new RunSRX(srx, stick1::getThrottle, new JoystickButton(stick1, 1))); //getSlider probably not right i'll figure it out once i get wiplib set up
-
+		srx.setDefaultCommand(new RunSRX(srx, stick1::getThrottle, new JoystickButton(stick1, 1)));
+		spark.setDefaultCommand(new RunSpark(spark, stick1::getThrottle, new JoystickButton(stick1, 1)));
+		falcon.setDefaultCommand(new RunFalcon(falcon, stick1::getThrottle, new JoystickButton(stick1, 1)));
 
 		// Configure the button bindings
 		configureButtonBindings();

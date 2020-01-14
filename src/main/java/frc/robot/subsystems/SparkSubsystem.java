@@ -7,25 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 
-public class SRXSubsystem extends SubsystemBase {
-  private final TalonSRX srx;
+public class SparkSubsystem extends SubsystemBase {
+
+  private final CANSparkMax spark;
 
   /**
-   * Creates a new SRXSubsystem.
+   * Creates a new SparkSubsystem.
    */
-  public SRXSubsystem() {
-	  srx = new TalonSRX(Ports.kCANSRX1);
+  public SparkSubsystem() {
+    spark = new CANSparkMax(Ports.kCANSPARK1, MotorType.kBrushless);
 
   }
 
   public void set(double power) {
-	  srx.set(ControlMode.PercentOutput, power);
+    spark.set(power);
   }
 
   @Override
@@ -33,7 +34,7 @@ public class SRXSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public TalonSRX getMotor() {
-    return srx;
+  public CANSparkMax getMotor() {
+    return spark;
   }
 }
