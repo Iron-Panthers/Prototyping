@@ -7,7 +7,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -23,6 +30,8 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer m_robotContainer;
 
+	private TalonFX armLeft;
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -33,6 +42,18 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
+		armLeft = new TalonFX(9);
+		armLeft.setSensorPhase(false); // Up is positive
+		armLeft.setInverted(true);
+		armLeft.setNeutralMode(NeutralMode.Brake);
+
+		// Current Limits and Power Limits
+		armLeft.configClosedLoopPeakOutput(0, 0.5);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 60, 60, 0);
+		armLeft.configSupplyCurrentLimit(currentConfig);
+		armLeft.configClosedloopRamp(0.25);
+		armLeft.configRemoteFeedbackFilter(new CANCoder(0), /*remote sensor:*/ 0);
+		armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0);
 	}
 
 	/**
@@ -104,6 +125,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Arm Position", armLeft.getSelectedSensorPosition());
 	}
 
 	@Override
