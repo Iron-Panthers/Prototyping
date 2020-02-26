@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
 		armLeft = new TalonFX(9);
+		armLeft.configRemoteFeedbackFilter(new CANCoder(0), /*remote sensor:*/ 0);
+		armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0);
 		armLeft.setSensorPhase(false); // Up is positive
 		armLeft.setInverted(true);
 		armLeft.setNeutralMode(NeutralMode.Brake);
@@ -52,8 +54,10 @@ public class Robot extends TimedRobot {
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 60, 60, 0);
 		armLeft.configSupplyCurrentLimit(currentConfig);
 		armLeft.configClosedloopRamp(0.25);
-		armLeft.configRemoteFeedbackFilter(new CANCoder(0), /*remote sensor:*/ 0);
-		armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0);
+	}
+
+	public double getAngle() {
+		return armLeft.getSelectedSensorPosition() / 4096.0 * 360.0;
 	}
 
 	/**
@@ -126,6 +130,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		SmartDashboard.putNumber("Arm Position", armLeft.getSelectedSensorPosition());
+		SmartDashboard.putNumber("Arm Angle", getAngle());
 	}
 
 	@Override
